@@ -14,6 +14,6 @@ const upload = multer({ storage, limits: { fileSize: 2 * 1024 * 1024 } });
 router.get('/', authenticate,  userController.getUsers);
 router.get('/:id', authenticate, userController.getUser);
 router.put('/:id', authenticate, upload.single('profileImage'), userController.updateProfile);
-router.delete('/:id', authenticate,  userController.deleteUser);
+router.delete('/:id', authenticate, authorize(['admin']), userController.deleteUser);
 
 module.exports = router;

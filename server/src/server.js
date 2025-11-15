@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 4000;
 (async () => {
   try {
     await sequelize.authenticate();
-    await sequelize.sync({ alter: true });
+    // await sequelize.sync({ alter: true });
     console.log("MySQL connected and models synced");
 
     // try {

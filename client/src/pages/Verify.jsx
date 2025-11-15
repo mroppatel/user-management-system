@@ -78,7 +78,6 @@ export default function VerifyEmail() {
               <p className="text-green-600 font-medium">{message}</p>
               <div className="flex gap-3">
                 <button onClick={() => goTo('/login')} className="px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700">Go to Login</button>
-                <button onClick={() => goTo('/profile')} className="px-4 py-2 rounded-md border">Go to Homepage</button>
               </div>
             </div>
           )}
