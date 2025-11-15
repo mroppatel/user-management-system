@@ -10,20 +10,17 @@ export default function Users() {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Get current logged-in user from localStorage
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     setCurrentUser(user);
   }, []);
 
-  // Debounce search input
   useEffect(() => {
-    const debounced = debounce(() => setQ(searchTerm), 500); // 500ms debounce
+    const debounced = debounce(() => setQ(searchTerm), 500);
     debounced();
     return () => debounced.cancel();
   }, [searchTerm]);
 
-  // Fetch users from API
   const fetchUsers = async () => {
     try {
       setLoading(true);
@@ -40,7 +37,6 @@ export default function Users() {
     fetchUsers();
   }, [q, page]);
 
-  // Delete user (admin only)
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this user?')) return;
     try {
@@ -53,26 +49,26 @@ export default function Users() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-white p-6 rounded shadow">
-      <h2 className="text-xl font-semibold mb-4">Users</h2>
+    <div className="max-w-5xl mx-auto bg-white p-4 sm:p-6 rounded shadow overflow-x-auto">
+      <h2 className="text-xl sm:text-2xl font-semibold mb-4">All Users</h2>
 
       {/* Search Input */}
       <input
         placeholder="Search"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="w-full border p-2 rounded mb-3"
+        className="w-full border p-2 rounded mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
       {/* Users Table */}
-      <table className="w-full border-collapse">
+      <table className="w-full border-collapse min-w-[600px] sm:min-w-full">
         <thead>
-          <tr className="text-left">
-            <th className="border p-2">ID</th>
-            <th className="border p-2">Name</th>
-            <th className="border p-2">Email</th>
-            <th className="border p-2">Role</th>
-            {currentUser?.role === 'admin' && <th className="border p-2">Actions</th>}
+          <tr className="text-left bg-gray-100">
+            <th className="border p-2 text-sm sm:text-base">ID</th>
+            <th className="border p-2 text-sm sm:text-base">Name</th>
+            <th className="border p-2 text-sm sm:text-base">Email</th>
+            <th className="border p-2 text-sm sm:text-base">Role</th>
+            {currentUser?.role === 'admin' && <th className="border p-2 text-sm sm:text-base">Actions</th>}
           </tr>
         </thead>
         <tbody>
@@ -90,16 +86,16 @@ export default function Users() {
             </tr>
           ) : (
             data.users.map((u) => (
-              <tr key={u.id}>
-                <td className="border p-2">{u.id}</td>
-                <td className="border p-2">{u.name}</td>
-                <td className="border p-2">{u.email}</td>
-                <td className="border p-2">{u.role}</td>
+              <tr key={u.id} className="hover:bg-gray-50">
+                <td className="border p-2 text-sm sm:text-base">{u.id}</td>
+                <td className="border p-2 text-sm sm:text-base">{u.name}</td>
+                <td className="border p-2 text-sm sm:text-base">{u.email}</td>
+                <td className="border p-2 text-sm sm:text-base">{u.role}</td>
                 {currentUser?.role === 'admin' && (
-                  <td className="border p-2">
+                  <td className="border p-2 text-sm sm:text-base">
                     <button
                       onClick={() => handleDelete(u.id)}
-                      className="bg-red-600 text-white px-2 py-1 rounded"
+                      className="bg-red-600 text-white px-2 py-1 rounded text-xs sm:text-sm"
                     >
                       Delete
                     </button>
@@ -112,24 +108,27 @@ export default function Users() {
       </table>
 
       {/* Pagination */}
-      <div className="mt-3 flex items-center">
-        <button
-          disabled={page <= 1}
-          onClick={() => setPage((p) => p - 1)}
-          className="px-3 py-1 border rounded mr-2"
-        >
-          Prev
-        </button>
-        <span>
-          Page {page} of {Math.ceil(data.total / data.limit) || 1}
-        </span>
-        <button
-          disabled={page >= Math.ceil(data.total / data.limit)}
-          onClick={() => setPage((p) => p + 1)}
-          className="px-3 py-1 border rounded ml-2"
-        >
-          Next
-        </button>
+      <div className="mt-3 flex flex-col sm:flex-row items-center sm:justify-between gap-2 sm:gap-0">
+        <div className="flex items-center gap-2">
+          <button
+            disabled={page <= 1}
+            onClick={() => setPage((p) => p - 1)}
+            className="px-3 py-1 border rounded disabled:opacity-50"
+          >
+            Prev
+          </button>
+          <span>Page {page} of {Math.ceil(data.total / data.limit) || 1}</span>
+          <button
+            disabled={page >= Math.ceil(data.total / data.limit)}
+            onClick={() => setPage((p) => p + 1)}
+            className="px-3 py-1 border rounded disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+        <div className="text-sm text-gray-500">
+          Total Users: {data.total}
+        </div>
       </div>
     </div>
   );
