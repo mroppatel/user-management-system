@@ -50,6 +50,11 @@ export default function Login(){
           </button>
         </div>
       </form>
+      <div className="mt-3">
+        <Link to="/forgot-password" className="text-blue-600">
+          Forgot Password?
+        </Link>
+      </div>
 
       <div className="mt-4">
         <button

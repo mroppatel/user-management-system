@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-// VerifyEmail.jsx
-// Usage: Add a route in your React app like /verify-email that renders this component.
-// Expects a `token` query param: /verify-email?token=... 
-// It calls the backend endpoint: `${import.meta.env.VITE_API_URL}/auth/verify-email?token=${token}`
-// Make sure to set VITE_API_URL in your .env (for example: VITE_API_URL=http://localhost:4000)
-
 export default function VerifyEmail() {
   const [status, setStatus] = useState('idle'); // idle | loading | success | error | missing
   const [message, setMessage] = useState('');
@@ -25,26 +19,21 @@ export default function VerifyEmail() {
       setMessage('Verifying your email...');
 
       try {
-        // Build verify URL. Your backend route must accept GET and read token from query.
         const base = import.meta.env.VITE_API_URL || '';
         const url = `${base}/auth/verify-email?token=${encodeURIComponent(token)}`;
 
         const res = await fetch(url, { method: 'GET' });
 
         if (res.ok) {
-          // backend returns HTML for a browser, or JSON — handle both
           let text = await res.text();
-          // Try to parse JSON if possible
           try {
             const json = JSON.parse(text);
             setMessage(json.message || 'Email verified successfully.');
           } catch (e) {
-            // If it's HTML or plain text, keep a friendly message
             setMessage('Email verified successfully. You can now log in.');
           }
           setStatus('success');
         } else {
-          // Try to extract error message
           let text = await res.text();
           try {
             const json = JSON.parse(text);
@@ -89,7 +78,7 @@ export default function VerifyEmail() {
               <p className="text-green-600 font-medium">{message}</p>
               <div className="flex gap-3">
                 <button onClick={() => goTo('/login')} className="px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700">Go to Login</button>
-                <button onClick={() => goTo('/')} className="px-4 py-2 rounded-md border">Go to Homepage</button>
+                <button onClick={() => goTo('/profile')} className="px-4 py-2 rounded-md border">Go to Homepage</button>
               </div>
             </div>
           )}
