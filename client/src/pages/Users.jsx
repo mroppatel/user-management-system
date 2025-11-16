@@ -52,7 +52,6 @@ export default function Users() {
     <div className="max-w-5xl mx-auto bg-white p-4 sm:p-6 rounded shadow overflow-x-auto">
       <h2 className="text-xl sm:text-2xl font-semibold mb-4">All Users</h2>
 
-      {/* Search Input */}
       <input
         placeholder="Search"
         value={searchTerm}
@@ -60,7 +59,6 @@ export default function Users() {
         className="w-full border p-2 rounded mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
-      {/* Users Table */}
       <table className="w-full border-collapse min-w-[600px] sm:min-w-full">
         <thead>
           <tr className="text-left bg-gray-100">
@@ -107,7 +105,6 @@ export default function Users() {
         </tbody>
       </table>
 
-      {/* Pagination */}
       <div className="mt-3 flex flex-col sm:flex-row items-center sm:justify-between gap-2 sm:gap-0">
         <div className="flex items-center gap-2">
           <button
