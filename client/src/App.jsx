@@ -1,25 +1,31 @@
-import React, { Suspense, lazy } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import React, { Suspense, lazy } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { logoutUser } from "./utils/logoutUser";
 
-const Login = lazy(() => import('./pages/Login'));
-const Register = lazy(() => import('./pages/Register'));
-const Profile = lazy(() => import('./pages/Profile'));
-const Users = lazy(() => import('./pages/Users'));
-const VerifyEmail = lazy(() => import('./pages/Verify'));
-const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
-const ResetPassword = lazy(() => import('./pages/ResetPassword'));
-const ProtectedRoute = lazy(() => import('./components/ProtectedRoute'));
+const Login = lazy(() => import("./pages/Login"));
+const Register = lazy(() => import("./pages/Register"));
+const Profile = lazy(() => import("./pages/Profile"));
+const Users = lazy(() => import("./pages/Users"));
+const VerifyEmail = lazy(() => import("./pages/Verify"));
+const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
+const ProtectedRoute = lazy(() => import("./components/ProtectedRoute"));
 
-export default function App(){
+export default function App() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow p-4">
-        <div className="max-w-4xl mx-auto">User Management System</div>
+      <header className="flex item-center justify-evenly bg-white shadow p-4">
+        <div className="max-w-4xl font-bold">User Management System</div>
+        <button
+          onClick={logoutUser}
+          className="bg-red-500 text-white px-4 py-2 rounded"
+        >
+          Logout
+        </button>
       </header>
       <main className="max-w-4xl mx-auto p-4">
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
-
             {/* Public Routes */}
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/login" element={<Login />} />
@@ -46,7 +52,6 @@ export default function App(){
                 </ProtectedRoute>
               }
             />
-
           </Routes>
         </Suspense>
       </main>

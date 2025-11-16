@@ -164,3 +164,27 @@ exports.resetPassword = async (req, res, next) => {
     return res.status(400).json({ message: "Invalid or expired token" });
   }
 };
+
+exports.logout = async (req, res, next) => {
+  try {
+    const { refreshToken } = req.body;
+
+    if (!refreshToken)
+      return res.status(400).json({ message: "Refresh token required" });
+
+    let decoded;
+    try {
+      decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+    } catch (e) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+
+    // Remove from redis
+    // try { await redisClient.connect(); } catch (e) {}
+    // await redisClient.del(`refresh_${decoded.id}`);
+
+    return res.json({ message: "Logged out successfully" });
+  } catch (err) {
+    next(err);
+  }
+};
