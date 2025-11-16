@@ -5,8 +5,8 @@ export default function Profile() {
   const stored = JSON.parse(localStorage.getItem("user") || "null");
   const [user, setUser] = useState(stored);
   const [name, setName] = useState(user?.name || "");
-  const [image, setImage] = useState(null); // new
-  const [preview, setPreview] = useState(null); // new
+  const [image, setImage] = useState(null); 
+  const [preview, setPreview] = useState(null); 
 
   if (!user) return <div>Please login</div>;
 
@@ -14,12 +14,11 @@ export default function Profile() {
     import.meta.env.VITE_API_URL?.replace("/api", "") ||
     "http://localhost:4000";
 
-  // Handle image selection
   const handleImage = (e) => {
     const file = e.target.files[0];
     setImage(file);
 
-    if (file) setPreview(URL.createObjectURL(file)); // live preview
+    if (file) setPreview(URL.createObjectURL(file)); 
   };
 
   const save = async () => {
@@ -44,7 +43,6 @@ export default function Profile() {
     <div className="max-w-lg mx-auto bg-white p-6 rounded shadow">
       <h2 className="text-xl font-semibold mb-4">My Profile</h2>
 
-      {/* Image display */}
       <div className="flex items-center space-x-4">
         <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full overflow-hidden bg-gray-100 flex justify-center items-center">
           {preview ? (
@@ -70,7 +68,6 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* Name */}
       <div className="mt-3">
         <label className="block text-sm">Name</label>
         <input
@@ -80,7 +77,6 @@ export default function Profile() {
         />
       </div>
 
-      {/* Email */}
       <div className="mt-3">
         <label className="block text-sm">Email</label>
         <input
@@ -90,7 +86,6 @@ export default function Profile() {
         />
       </div>
 
-      {/* Save button */}
       <div className="mt-4">
         <button
           onClick={save}

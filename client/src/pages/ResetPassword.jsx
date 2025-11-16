@@ -4,7 +4,7 @@ import API from "../api/axiosInstance";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function ResetPassword() {
-  const { register, handleSubmit, watch } = useForm();
+  const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const [message, setMessage] = React.useState("");
   const [searchParams] = useSearchParams();
@@ -22,7 +22,7 @@ export default function ResetPassword() {
         password: data.password,
       });
       setMessage(res.data.message);
-      setTimeout(() => navigate("/login"), 2000); // Redirect to login
+      setTimeout(() => navigate("/login"), 2000); 
     } catch (err) {
       setMessage(err.response?.data?.message || err.message);
     }
